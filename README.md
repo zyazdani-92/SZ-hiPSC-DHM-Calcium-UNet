@@ -12,7 +12,7 @@ The extracted multimodal features are used to investigate maturation-dependent d
 
 The U-Net Cell Body and U-Net Neurite architectures are based on an implementation of the [U-Net model for Keras](https://github.com/pietz/unet-keras).
 
-![U-Net cell-body and neurite segmentation models](U-Net-models.svg "U-Net Segmentation Models")
+![U-Net cell-body and neurite segmentation models](hIPSC-pipeline.svg "U-Net Segmentation Models")
 
 ## Overview
 
@@ -131,9 +131,9 @@ The data may be made available by the corresponding author upon reasonable reque
 
 This package is part of a Ph.D. project conducted by [Zahra Yazdani](https://github.com/zyazdani-92) under the supervision of [Patrick Desrosiers](https://github.com/pdesrosiers) and [Antoine Allard](https://github.com/antoineallard) at the [Dynamica Research Lab](https://github.com/DynamicaLab), Université Laval.
 
-This research is a collaborative effort with [Pierre Marquet](https://scholar.google.ca/citations?user=-hYR_owAAAAJ&hl=en&oi=sra) at the [Laboratoire de recherche en neurophotonique et psychiatrie](https://www.labrnp.ca/) at the CERVO Brain Research Centre.
+This research is conducted in collaboration with [Pierre Marquet](https://scholar.google.ca/citations?user=-hYR_owAAAAJ&hl=en&oi=sra) at the [Laboratoire de recherche en neurophotonique et psychiatrie](https://www.labrnp.ca/) at the CERVO Brain Research Centre. The hiPSC-derived neuronal cultures were prepared and imaged by Niraj Patel in Pierre Marquet’s laboratory.
 
-The research is part of the Neuro-CERVO Alliance for Drug Discovery in Brain Diseases ([NCADD](https://www.neuro-cervo.org/)). NCADD supports collaborative research into the mechanisms and treatment of neurological and psychiatric disorders.
+This research is part of the Neuro-CERVO Alliance for Drug Discovery in Brain Diseases (NCADD), which supports collaborative research into the mechanisms and treatment of neurological and psychiatric disorders.
 
 Our work has received support from NCADD.
 
