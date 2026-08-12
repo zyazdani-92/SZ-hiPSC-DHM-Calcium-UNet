@@ -12,7 +12,7 @@ The extracted multimodal features are used to investigate maturation-dependent d
 
 The U-Net Cell Body and U-Net Neurite architectures are based on an implementation of the [U-Net model for Keras](https://github.com/pietz/unet-keras).
 
-![U-Net cell-body and neurite segmentation models](U-Net-models.svg "U-Net Segmentation Models")
+![U-Net cell-body and neurite segmentation models](hIPSC-pipeline.svg "U-Net Segmentation Models")
 
 ## Overview
 
