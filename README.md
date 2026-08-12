@@ -1,56 +1,113 @@
 # SZ-hiPSC-DHM-Calcium-UNet
 
-## Schizophrenia hiPSC-derived neuron analysis using DHM, calcium imaging, and U-Net
+## Multimodal segmentation and analysis of schizophrenia hiPSC-derived neurons using DHM, calcium imaging, and U-Net
 
-U-Net Cell Body and U-Net Neurite are deep-learning models for identifying cell bodies and neuronal processes in digital holographic microscopy (DHM) quantitative phase images of schizophrenia (SZ) and healthy control (CTL) hiPSC-derived neuronal cultures.
+U-Net Cell Body and U-Net Neurite are deep-learning models developed to identify neuronal cell bodies and neurites in multimodal images of schizophrenia (SZ) and healthy control (CTL) hiPSC-derived neuronal cultures.
 
-The two U-Net models use a convolutional two-dimensional architecture for accurate semantic segmentation of neuronal images. The resulting segmentation masks are combined with calcium fluorescence images to extract morphological, biophysical, and functional neuronal properties.
+Both U-Net models were trained using digital holographic microscopy (DHM) quantitative phase images and calcium fluorescence images. The multimodal image sequences are processed into projection images and divided into image patches before being provided to the corresponding U-Net segmentation pipelines.
 
-The extracted multimodal features are used to investigate maturation-dependent differences between CTL and SZ neuronal cultures and to classify their disease-state identity.
+The trained models generate probability maps of neuronal cell bodies and neurites. These segmentation results are used to identify individual neurons, quantify neuronal morphology, and extract matched quantitative phase and calcium fluorescence time series.
 
-* [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/)
+The resulting morphological, biophysical, and functional features are used to investigate maturation-dependent differences between CTL and SZ neuronal cultures and to classify their disease-state identity.
+
+- [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/)
 
 The U-Net Cell Body and U-Net Neurite architectures are based on an implementation of the [U-Net model for Keras](https://github.com/pietz/unet-keras).
 
-![U-Net cell-body and neurite segmentation models](hIPSC-pipeline.png "U-Net Segmentation Models")
+![Multimodal hiPSC-derived neuronal image-analysis pipeline](hIPSC-pipeline.png "DHM and Calcium Imaging Analysis Pipeline")
 
 ## Overview
 
+### Multimodal Image Acquisition
+
+DHM quantitative phase and calcium fluorescence image sequences are acquired from the same hiPSC-derived neuronal cultures at a frequency of 1 Hz.
+
+Recordings are performed under three pharmacological conditions:
+
+- Baseline receptor activity
+- Selective non-NMDAR blockade
+- Combined non-NMDAR and NMDAR blockade
+
+After an initial period of spontaneous activity, the neuronal cultures are stimulated with glutamate. Quantitative phase and calcium signals are recorded to characterize the corresponding biophysical and functional responses.
+
+### Image Projection and Preprocessing
+
+The acquired DHM and calcium image sequences are converted into two-dimensional projection images before segmentation:
+
+- Average-projection images are generated from the DHM quantitative phase sequences.
+- Maximum-projection images are generated from the calcium fluorescence sequences.
+
+The projection images are divided into smaller image patches, which are provided as inputs to the U-Net segmentation models. After prediction, the segmented patches are merged to reconstruct probability maps covering the complete field of view.
+
 ### U-Net Cell Body
 
-A deep-learning model for cell-body segmentation from DHM quantitative phase images of hiPSC-derived neuronal cultures.
+U-Net Cell Body is a deep-learning model trained using multimodal DHM quantitative phase and calcium fluorescence images to identify neuronal cell bodies.
 
-The generated cell-body masks are used to extract:
+The model generates cell-body probability maps that are used to:
 
-* Cell-body area
-* Cell-body position
-* Cell density
-* Quantitative phase measurements
-* Spatial and network properties
+- Identify individual neurons
+- Determine cell-body positions
+- Measure cell-body area
+- Calculate neuronal density
+- Define cellular regions of interest
+- Extract matched quantitative phase time series
+- Extract matched calcium fluorescence time series
+- Characterize spatial and network organization
 
 ### U-Net Neurite
 
-A deep-learning model for neuronal-process segmentation from DHM quantitative phase images of hiPSC-derived neuronal cultures.
+U-Net Neurite is a deep-learning model trained using multimodal DHM quantitative phase and calcium fluorescence images to identify neuronal processes.
 
-The generated neurite masks are used to extract:
+The model generates neurite probability maps that are used to:
 
-* Neurite length
-* Neurite distribution
-* Neuronal connectivity
-* Structural network properties
+- Identify neuronal processes
+- Measure neurite length
+- Quantify neurite distribution
+- Determine connections between neuronal cell bodies
+- Reconstruct structural neuronal networks
+- Calculate graph-theoretical properties
+- Compare network organization between CTL and SZ cultures
 
-### DHM and Calcium Imaging
+### Quantitative Phase Time-Series Extraction
 
-DHM quantitative phase images and calcium fluorescence images are spatially registered to associate segmented neurons with their corresponding calcium signals.
+The cell-body probability maps are applied to the DHM image sequences to extract quantitative phase time series for individual neurons.
 
-This multimodal imaging approach enables the extraction of:
+The phase signals are corrected and normalized relative to their prestimulation baselines. These signals provide information about glutamate-evoked biophysical changes associated with:
 
-* Morphological properties
-* Phase-derived biophysical responses
-* Calcium-associated functional responses
-* Graph-theoretical features
-* Maturation-dependent neuronal signatures
+- Intracellular mass redistribution
+- Variations in cellular optical path length
+- Changes in cell thickness
+- Ion–water coupling
+- Transmembrane water movements
+- Volume-regulatory processes
 
+### Calcium Time-Series Extraction
+
+The cell-body probability maps are also applied to the calcium fluorescence image sequences to extract calcium-associated time series for individual neurons.
+
+After baseline correction, changes in fluorescence intensity are used to quantify glutamate-evoked intracellular calcium responses under the different pharmacological conditions.
+
+### Multimodal Feature Extraction
+
+The segmentation masks and extracted time series are combined to calculate:
+
+- Cell-body area
+- Neurite length
+- Neuronal density
+- Quantitative phase features
+- Calcium fluorescence features
+- Phase-response dynamics
+- Calcium-response dynamics
+- Structural network properties
+- Functional network properties
+- Graph-theoretical and spectral features
+- Maturation-dependent neuronal signatures
+
+### Disease-State Classification
+
+The extracted morphological, phase-derived, calcium-associated, and network features are used to identify differences between CTL and SZ hiPSC-derived neuronal cultures.
+
+Separate Random Forest classifiers are developed for week 2 and week 6 because the most informative disease-associated features may change during neuronal maturation. The predictions from both maturation stages are subsequently integrated to classify each cell line as CTL or SZ.
 ### Disease-State Classification
 
 Morphological, phase-derived, calcium-associated, and network features are combined using machine-learning methods to classify healthy control and schizophrenia hiPSC-derived neuronal cultures.
