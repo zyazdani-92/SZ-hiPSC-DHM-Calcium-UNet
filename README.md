@@ -215,7 +215,7 @@ The publication link and DOI will be added when available.
 ***
 ## Thanks
 
-- [Maxime Moreaud](https://www.ifpenergiesnouvelles.com/page/maxime-moreaud), whose stochastic patch-wise prediction method was used for batch processing of DHM and calcium images and contributed to improving the U-Net segmentation results.
+- [Maxime Moreaud](https://orcid.org/0000-0002-4908-401X), whose stochastic patch-wise prediction method was used for batch processing of DHM and calcium images and contributed to improving the U-Net segmentation results.
 
 - Image motion correction and registration were performed using the [Images Registration](https://github.com/Coohrentiin/Images_Registration) pipeline developed by [Corentin Coudray](https://github.com/Coohrentiin).
 
