@@ -52,7 +52,6 @@ The model generates cell-body probability maps that are used to:
 - Define cellular regions of interest
 - Extract matched quantitative phase time series
 - Extract matched calcium fluorescence time series
-- Characterize spatial and network organization
 
 ### U-Net Neurite
 
@@ -63,10 +62,8 @@ The model generates neurite probability maps that are used to:
 - Identify neuronal processes
 - Measure neurite length
 - Quantify neurite distribution
-- Determine connections between neuronal cell bodies
+- Determine probable connections between neuronal cell bodies
 - Reconstruct structural neuronal networks
-- Calculate graph-theoretical properties
-- Compare network organization between CTL and SZ cultures
 
 ### Quantitative Phase Time-Series Extraction
 
@@ -77,7 +74,6 @@ The phase signals are corrected and normalized relative to their prestimulation 
 - Intracellular mass redistribution
 - Variations in cellular optical path length
 - Changes in cell thickness
-- Ion–water coupling
 - Transmembrane water movements
 - Volume-regulatory processes
 
