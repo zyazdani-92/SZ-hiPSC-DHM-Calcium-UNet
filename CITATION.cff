@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it using the metadata below."
+
+title: "SZ-hiPSC-DHM-Calcium-UNet: Multimodal Imaging Analysis and Disease-State Classification of Schizophrenia hiPSC-Derived Neurons"
+
+type: software
+
+authors:
+  - family-names: "Yazdani"
+    given-names: "Zahra"
+    orcid: "https://orcid.org/0009-0002-7134-8445"
+
+abstract: >-
+  A computational pipeline for U-Net-based cell-body and neurite
+  segmentation, multimodal analysis of digital holographic microscopy
+  quantitative phase and calcium fluorescence images, feature extraction,
+  and disease-state classification of schizophrenia and healthy control
+  hiPSC-derived neuronal cultures.
+
+keywords:
+  - schizophrenia
+  - hiPSC-derived neurons
+  - digital holographic microscopy
+  - quantitative phase imaging
+  - calcium imaging
+  - U-Net
+  - semantic segmentation
+  - machine learning
+  - disease-state classification
+  - computational neuroscience
+
+repository-code: "https://github.com/zyazdani-92/SZ-hiPSC-DHM-Calcium-UNet"
+
+url: "https://github.com/zyazdani-92/SZ-hiPSC-DHM-Calcium-UNet"
+
+version: "1.0.0"
+
+date-released: "2026-08-13"
