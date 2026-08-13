@@ -101,9 +101,41 @@ The segmentation masks and extracted time series are combined to calculate:
 
 ### Disease-State Classification
 
-The extracted morphological, phase-derived, calcium-associated, and network features are used to identify differences between CTL and SZ hiPSC-derived neuronal cultures.
+Morphological, phase-derived, calcium-associated, and network features are combined to identify maturation-dependent differences between CTL and SZ hiPSC-derived neuronal cultures and classify their disease-state identity.
 
-Separate Random Forest classifiers are developed for week 2 and week 6 because the most informative disease-associated features may change during neuronal maturation. Predictions from both stages are subsequently integrated to classify each cell line as CTL or SZ.
+Feature selection and classification are performed separately for week 2 (W2) and week 6 (W6):
+
+1. One CTL and one SZ cell line are held out for testing, while the remaining four cell lines are used for training.
+
+2. All possible two-feature combinations are evaluated across the nine independent CTL–SZ holdout splits.
+
+3. A Random Forest classifier is trained on the training cell lines and evaluated on the held-out cell lines.
+
+4. Feature pairs are retained only if both held-out class sensitivities satisfy:
+
+   - $\mathrm{TPR}_{\mathrm{CTL}} \geq 0.5$
+   - $\mathrm{TPR}_{\mathrm{SZ}} \geq 0.5$
+
+5. The retained feature pairs are ranked according to their mean balanced accuracy (bACC) across the nine splits. The most discriminative pair is selected separately for W2 and W6.
+
+6. Separate W2 and W6 Random Forest models are trained using their selected feature pairs. Each model assigns a probability of SZ identity to every replicate of the held-out cell line.
+
+7. The W2 and W6 probabilities are averaged to obtain the integrated disease-state probability:
+
+$$
+P_{\mathrm{SZ}}=\frac{1}{2}
+\left(
+\hat{P}_{\mathrm{SZ}}^{\mathrm{W2}}
++
+\hat{P}_{\mathrm{SZ}}^{\mathrm{W6}}
+\right),
+\qquad
+P_{\mathrm{CTL}}=1-P_{\mathrm{SZ}}.
+$$
+
+The final cell-line classification is determined from the integrated W2/W6 probability.
+
+![CTL/SZ feature-selection and disease-state-classification pipeline](Cohort-Classification.png "CTL/SZ Feature Selection and Disease-State Classification Pipeline")
 
 ## Dependencies
 
