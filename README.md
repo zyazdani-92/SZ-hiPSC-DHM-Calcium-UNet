@@ -140,35 +140,64 @@ pip install -r requirements.txt
 
 ## Training
 
-4. Navigate to the `U-Net-training-pipeline` folder.
+The U-Net Cell Body and U-Net Neurite models are trained using the [U-Net training pipeline](https://github.com/zyazdani-92/UDHM-Cellbody-Neurite/tree/main/U-Net-training-pipeline) available in the [UDHM-Cellbody-Neurite repository](https://github.com/zyazdani-92/UDHM-Cellbody-Neurite).
 
-5. Place the training and validation images and their manually annotated masks in the `data` folder within the `U-Net-training-pipeline` directory.
+Two separate U-Net models are trained:
 
-6. To train the cell-body model and save its weights as `DHM_cell_body.hdf5`, run the `trainUNet.ipynb` Jupyter notebook.
+- **U-Net Cell Body** is trained using DHM quantitative phase and calcium fluorescence images with their corresponding manually annotated cell-body masks.
+- **U-Net Neurite** is trained using DHM quantitative phase and calcium fluorescence images with their corresponding manually annotated neurite masks.
 
-7. Repeat steps 4–6 using the neurite training images and masks to train the `DHM_Neurite.hdf5` model.
+1. Clone the training repository:
 
-The complete patient-derived imaging dataset is not included in this repository. Example images and masks may be provided to demonstrate the expected input format.
+```bash
+git clone https://github.com/zyazdani-92/UDHM-Cellbody-Neurite.git
+cd UDHM-Cellbody-Neurite/U-Net-training-pipeline
+```
+
+2. Place the training and validation images and their corresponding manually annotated masks in the appropriate directories inside the `data` folder.
+
+3. Run the `trainUNet.ipynb` notebook using the cell-body dataset to train the U-Net Cell Body model.
+
+4. Repeat the training procedure using the neurite dataset to train the U-Net Neurite model.
+
+The trained models used in this project are:
+
+- Cell-body model: `DF-model.hdf5`
+- Neurite model: `DHM-Fluo_neurite_model.hdf5`
+
+The complete patient-derived imaging dataset is not publicly available in this repository because of data-access restrictions.
 
 ***
 
 ## Brief Usage Guidelines for the Trained Models
 
-8. Place the DHM quantitative phase images in the `Test_img` folder.
+1. Perform motion correction on the DHM quantitative phase and calcium fluorescence image sequences.
 
-9. Use the `DHM_cell_body.hdf5` and `DHM_Neurite.hdf5` models with the `Img2map_pipeline.ipynb` notebook in the prediction pipeline folder.
+2. Register the calcium fluorescence images with the corresponding DHM images.
 
-10. Generate the cell-body and neurite segmentation masks.
+3. Generate average-projection images from the DHM image sequences and maximum-projection images from the calcium fluorescence sequences.
 
-11. Combine the outputs of the two trained models to characterize neuronal morphology and structural network organization.
+4. Place the projection images in the `Test_img` folder.
 
-12. Register the corresponding calcium fluorescence images with the DHM images.
+5. Load the following trained models:
 
-13. Extract the morphological, phase-derived, calcium-associated, and network features.
+   - `DF-model.hdf5` for cell-body segmentation
+   - `DHM-Fluo_neurite_model.hdf5` for neurite segmentation
 
-14. Use the extracted multimodal features for statistical analysis and CTL/SZ disease-state classification.
+6. Run the `Img2map_pipeline.ipynb` notebook located in the prediction pipeline folder.
 
-<img src="classification-results.svg" width="1200" alt="CTL and SZ disease-state classification results"/>
+7. Generate the cell-body and neurite probability maps.
+
+8. Apply the optimized thresholds and watershed segmentation to produce binary neurite masks and labeled cell-body masks.
+
+9. Combine the segmentation outputs to quantify cell-body morphology, neurite organization, and structural network properties.
+
+10. Apply the cell-body masks to the registered DHM and calcium image sequences to extract matched quantitative phase and calcium fluorescence time series.
+
+11. Extract morphological, phase-derived, calcium-associated, graph-theoretical, and network features.
+
+12. Use the extracted multimodal features for statistical analysis and CTL/SZ disease-state classification.
+
 
 ***
 
