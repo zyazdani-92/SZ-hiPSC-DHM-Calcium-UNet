@@ -4,7 +4,7 @@
 
 U-Net Cell Body and U-Net Neurite are deep-learning models developed to identify neuronal cell bodies and neurites in multimodal images of schizophrenia (SZ) and healthy control (CTL) hiPSC-derived neuronal cultures.
 
-Both U-Net models were trained using digital holographic microscopy (DHM) quantitative phase images and calcium fluorescence images. The multimodal image sequences are processed into projection images and divided into image patches before being provided to the corresponding U-Net segmentation pipelines.
+Both U-Net models were trained using digital holographic microscopy (DHM) quantitative phase images and calcium fluorescence images with their corresponding manually annotated masks. Before segmentation, the multimodal image sequences are converted into projection images and divided into patches for U-Net inference.
 
 The trained models generate probability maps of neuronal cell bodies and neurites. These segmentation results are used to identify individual neurons, quantify neuronal morphology, and extract matched quantitative phase and calcium fluorescence time series.
 
@@ -12,7 +12,7 @@ The resulting morphological, biophysical, and functional features are used to in
 
 - [U-Net: Convolutional Networks for Biomedical Image Segmentation](https://lmb.informatik.uni-freiburg.de/people/ronneber/u-net/)
 
-The U-Net Cell Body and U-Net Neurite architectures are based on an implementation of the [U-Net model for Keras](https://github.com/pietz/unet-keras).
+The U-Net Cell Body and U-Net Neurite architectures are based on the [U-Net implementation for Keras](https://github.com/pietz/unet-keras).
 
 ![Multimodal hiPSC-derived neuronal image-analysis pipeline](hIPSC-pipeline.png "DHM and Calcium Imaging Analysis Pipeline")
 
@@ -41,7 +41,7 @@ The projection images are divided into smaller image patches, which are provided
 
 ### U-Net Cell Body
 
-U-Net Cell Body is a deep-learning model trained using multimodal DHM quantitative phase and calcium fluorescence images to identify neuronal cell bodies.
+U-Net Cell Body is trained using DHM quantitative phase and calcium fluorescence images with manually annotated cell-body masks.
 
 The model generates cell-body probability maps that are used to:
 
@@ -55,7 +55,7 @@ The model generates cell-body probability maps that are used to:
 
 ### U-Net Neurite
 
-U-Net Neurite is a deep-learning model trained using multimodal DHM quantitative phase and calcium fluorescence images to identify neuronal processes.
+U-Net Neurite is trained using DHM quantitative phase and calcium fluorescence images with manually annotated neurite masks.
 
 The model generates neurite probability maps that are used to:
 
@@ -103,12 +103,7 @@ The segmentation masks and extracted time series are combined to calculate:
 
 The extracted morphological, phase-derived, calcium-associated, and network features are used to identify differences between CTL and SZ hiPSC-derived neuronal cultures.
 
-Separate Random Forest classifiers are developed for week 2 and week 6 because the most informative disease-associated features may change during neuronal maturation. The predictions from both maturation stages are subsequently integrated to classify each cell line as CTL or SZ.
-### Disease-State Classification
-
-Morphological, phase-derived, calcium-associated, and network features are combined using machine-learning methods to classify healthy control and schizophrenia hiPSC-derived neuronal cultures.
-
-Separate Random Forest classifiers are developed for week 2 and week 6, followed by an integrated maturation-stage classification framework.
+Separate Random Forest classifiers are developed for week 2 and week 6 because the most informative disease-associated features may change during neuronal maturation. Predictions from both stages are subsequently integrated to classify each cell line as CTL or SZ.
 
 ## Dependencies
 
@@ -140,12 +135,12 @@ pip install -r requirements.txt
 
 ## Training
 
-The U-Net Cell Body and U-Net Neurite models are trained using the [U-Net training pipeline](https://github.com/zyazdani-92/UDHM-Cellbody-Neurite/tree/main/U-Net-training-pipeline) available in the [UDHM-Cellbody-Neurite repository](https://github.com/zyazdani-92/UDHM-Cellbody-Neurite).
+The U-Net Cell Body and U-Net Neurite models were trained using the [U-Net training pipeline](https://github.com/zyazdani-92/UDHM-Cellbody-Neurite/tree/main/U-Net-training-pipeline) available in the [UDHM-Cellbody-Neurite repository](https://github.com/zyazdani-92/UDHM-Cellbody-Neurite).
 
-Two separate U-Net models are trained:
+Two separate U-Net models were trained:
 
-- **U-Net Cell Body** is trained using DHM quantitative phase and calcium fluorescence images with their corresponding manually annotated cell-body masks.
-- **U-Net Neurite** is trained using DHM quantitative phase and calcium fluorescence images with their corresponding manually annotated neurite masks.
+- **U-Net Cell Body** was trained using DHM quantitative phase and calcium fluorescence images with their corresponding manually annotated cell-body masks.
+- **U-Net Neurite** was trained using DHM quantitative phase and calcium fluorescence images with their corresponding manually annotated neurite masks.
 
 1. Clone the training repository:
 
@@ -171,7 +166,7 @@ The complete patient-derived imaging dataset is not publicly available in this r
 
 ## Brief Usage Guidelines for the Trained Models
 
-1. Perform motion correction on the DHM quantitative phase and calcium fluorescence image sequences.
+1. Perform motion correction on the DHM quantitative phase and calcium fluorescence image sequences using the [Images Registration](https://github.com/Coohrentiin/Images_Registration) pipeline.
 
 2. Register the calcium fluorescence images with the corresponding DHM images.
 
@@ -186,7 +181,7 @@ The complete patient-derived imaging dataset is not publicly available in this r
 
 6. Run the `Img2map_pipeline.ipynb` notebook located in the prediction pipeline folder.
 
-7. Generate the cell-body and neurite probability maps.
+7. Generate cell-body and neurite probability maps for the DHM and calcium projection images.
 
 8. Apply the optimized thresholds and watershed segmentation to produce binary neurite masks and labeled cell-body masks.
 
@@ -198,12 +193,11 @@ The complete patient-derived imaging dataset is not publicly available in this r
 
 12. Use the extracted multimodal features for statistical analysis and CTL/SZ disease-state classification.
 
-
 ***
 
 ## Data Availability
 
-The raw data supporting this study contain patient-derived imaging information and are not publicly distributed through this repository.
+The raw data supporting this study include patient-derived imaging data and are not publicly distributed through this repository.
 
 The data may be made available by the corresponding author upon reasonable request and subject to applicable ethical, institutional, and data-sharing requirements.
 
@@ -215,17 +209,13 @@ This package is part of a Ph.D. project conducted by [Zahra Yazdani](https://git
 
 This research is conducted in collaboration with [Pierre Marquet](https://scholar.google.ca/citations?user=-hYR_owAAAAJ&hl=en&oi=sra) at the [Laboratoire de recherche en neurophotonique et psychiatrie](https://www.labrnp.ca/) at the CERVO Brain Research Centre. The hiPSC-derived neuronal cultures were prepared and imaged by [Niraj Patel](https://orcid.org/0000-0002-7820-202X) in Pierre Marquet’s laboratory.
 
-This research is part of the Neuro-CERVO Alliance for Drug Discovery in Brain Diseases (NCADD), which supports collaborative research into the mechanisms and treatment of neurological and psychiatric disorders.
-
-Our work has received support from NCADD.
+This research is part of the Neuro-CERVO Alliance for Drug Discovery in Brain Diseases (NCADD), which supports collaborative research into the mechanisms and treatment of neurological and psychiatric disorders. This work received support from NCADD.
 
 ***
 
 ## Important Links
 
-Documentation: [https://github.com/zyazdani-92/SZ-hiPSC-DHM-Calcium-UNet](https://github.com/zyazdani-92/SZ-hiPSC-DHM-Calcium-UNet)
-
-GitHub repository: [https://github.com/zyazdani-92/SZ-hiPSC-DHM-Calcium-UNet](https://github.com/zyazdani-92/SZ-hiPSC-DHM-Calcium-UNet)
+GitHub repository and documentation: [SZ-hiPSC-DHM-Calcium-UNet](https://github.com/zyazdani-92/SZ-hiPSC-DHM-Calcium-UNet)
 
 ***
 
@@ -238,11 +228,14 @@ Zahra Yazdani et al. *Divergent Maturation Trajectories in Schizophrenia hiPSC N
 The publication link and DOI will be added when available.
 
 ***
+
 ## Thanks
 
-- [Maxime Moreaud](https://orcid.org/0000-0002-4908-401X), whose stochastic patch-wise prediction method was used for batch processing of DHM and calcium images and contributed to improving the U-Net segmentation results.
+- [Maxime Moreaud](https://orcid.org/0000-0002-4908-401X), whose stochastic patch-wise prediction method was used for batch processing of DHM and calcium images and helped improve the U-Net segmentation results.
 
-- Image motion correction and registration were performed using the [Images Registration](https://github.com/Coohrentiin/Images_Registration) pipeline developed by [Corentin Coudray](https://github.com/Coohrentiin).
+- Image motion correction was performed using the [Images Registration](https://github.com/Coohrentiin/Images_Registration) pipeline developed by [Corentin Coudray](https://github.com/Coohrentiin).
+
+***
 
 ## Citation
 
